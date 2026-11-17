@@ -1,0 +1,28 @@
+JAWABAN PERTANYAAN CHECKPOINT MODUL PRAKTIKUM 5
+==============================================
+
+Pertanyaan 1:
+Callback apa saja yang berjalan pada MainActivity saat DetailActivity dibuka, dan mengapa onDestroy() tidak termasuk?
+
+Jawaban:
+Saat DetailActivity dibuka, callback yang berjalan pada MainActivity secara berurutan adalah:
+1. onPause()
+2. onStop()
+3. onSaveInstanceState()
+
+Alasan mengapa onDestroy() tidak termasuk adalah karena MainActivity tidak dihancurkan oleh sistem, melainkan hanya dijeda dan disembunyikan di latar belakang (background) karena tertutup sepenuhnya oleh DetailActivity. MainActivity tetap dipertahankan di dalam memori agar dapat langsung dipulihkan kembali melalui onRestart() saat pengguna menekan tombol kembali (Back) dari DetailActivity.
+
+
+Pertanyaan 2:
+Mengapa EditText pada form pulih sendiri setelah rotasi, sedangkan urutNim tidak?
+
+Jawaban:
+Komponen View bawaan Android seperti EditText sudah memiliki mekanisme internal otomatis untuk menyimpan dan memulihkan state-nya (seperti teks yang sedang diketik) saat terjadi configuration change (rotasi layar), dengan syarat View tersebut memiliki atribut android:id yang unik. Sebaliknya, urutNim adalah variabel primitif biasa (Boolean) di dalam kode Kotlin yang disimpan di memori objek Activity. Ketika Activity dihancurkan dan dibuat ulang saat layar diputar, seluruh variabel objek tersebut ikut terhapus dan diinisialisasi ulang ke nilai awalnya kecuali disimpan secara manual menggunakan onSaveInstanceState().
+
+
+Pertanyaan 3:
+Apa perbedaan data yang cocok disimpan di Bundle dan data yang harus disimpan di database?
+
+Jawaban:
+- Bundle: Cocok untuk menyimpan data sementara (transient state) yang berukuran kecil dan bertipe sederhana (seperti Boolean, Int, String). Data ini hanya berfungsi untuk mempertahankan kondisi antarmuka (UI state) sesaat ketika Activity dibuat ulang akibat rotasi layar atau perubahan konfigurasi, dan akan hilang jika aplikasi ditutup sepenuhnya.
+- Database: Digunakan untuk menyimpan data permanen (persistent data) yang berukuran besar maupun terstruktur (seperti daftar data mahasiswa). Data di dalam database harus tetap tersimpan secara aman di penyimpanan lokal perangkat dan tidak boleh hilang meskipun aplikasi ditutup sepenuhnya atau perangkat dimatikan.
